@@ -3,7 +3,7 @@ services:
     kopia:
         image: kopia/kopia:latest
         container_name: kopia 
-        user: "$GUID:$PUID"   
+        user: "1000:1000"   
         privileged: true                    
         restart: unless-stopped
         ports:
@@ -27,7 +27,7 @@ services:
             KOPIA_PASSWORD: "p4ssword"
             TZ: Europe/Madrid            
         volumes:
-            - /root/docker:/tmp:shared     
+            - /root/docker:/source     
             - ./kopia/config:/app/config
             - ./kopia/cache:/app/cache
             - ./kopia/logs:/app/logs
