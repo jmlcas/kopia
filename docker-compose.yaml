@@ -4,7 +4,7 @@ services:
         image: kopia/kopia:latest
         container_name: kopia 
         user: "1000:1000"   
-        privileged: true                    
+        privileged: true      
         restart: unless-stopped
         ports:
             - "51515:51515"
@@ -13,22 +13,26 @@ services:
         security_opt:
             - apparmor:unconfined
         devices:
-            - /dev/fuse:/dev/fuse:rwm            
+            - /dev/fuse:/dev/fuse:rwm  
         command:
             - server
             - start
             - --disable-csrf-token-checks
-            - --insecure            
+            - --insecure 
             - --address=0.0.0.0:51515
             - --server-username=User
             - --server-password=p4ssw0rd
         environment:
-            USER: "User"            
+            USER: "User"   
             KOPIA_PASSWORD: "p4ssword"
-            TZ: Europe/Madrid            
+            TZ: Europe/Madrid
         volumes:
-            - /root/docker:/source     
-            - ./kopia/config:/app/config
-            - ./kopia/cache:/app/cache
-            - ./kopia/logs:/app/logs
-            - ./kopia/data:/data:ro     
+            - /kopia/config/dir:/app/config
+            - /kopia/cache/dir:/app/cache
+            - /kopia/logs/dir:/app/logs
+            # Mount local folders to snapshot
+            - /kopia/data/dir:/data:ro
+            # Mount repository location
+            - /kopia/repository/dir:/repository
+            # Mount path for browsing mounted snaphots
+            - /kopia/tmp/dir:/tmp:shared
