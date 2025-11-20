@@ -1,3 +1,3 @@
 # Kopia
 
-Ver en "localhost:51515"
+Ver en "http://localhost:51515"
